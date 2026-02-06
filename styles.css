@@ -181,6 +181,7 @@ body::before {
 
 .hero-content {
     z-index: 2;
+    margin-left: clamp(1.5rem, 4vw, 4rem);
 }
 
 .hero-title {
@@ -268,6 +269,55 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.profile-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+
+.profile-image {
+    width: 320px;
+    height: 320px;
+    object-fit: contain;
+    background: radial-gradient(circle, rgba(8, 12, 30, 0.9), rgba(5, 8, 20, 0.9));
+    border-radius: 50%;
+    border: 3px solid rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.3),
+                inset 0 0 40px rgba(0, 255, 255, 0.1);
+    transition: var(--transition-normal);
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.2));
+    position: relative;
+    z-index: 5;
+}
+
+.profile-image:hover {
+    box-shadow: 0 0 60px rgba(0, 255, 255, 0.5),
+                inset 0 0 40px rgba(0, 255, 255, 0.15);
+    filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.4));
+    transform: scale(1.02);
+}
+
+.small-profile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-cyan);
+    margin-right: var(--spacing-sm);
+    object-fit: cover;
+}
+
+.resume-btn {
+    display: inline-block;
+    position: relative;
+    z-index: 10;
 }
 
 #network-canvas {
@@ -369,6 +419,25 @@ section::before {
 
 .education-card p {
     color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.education-item + .education-item {
+    margin-top: var(--spacing-lg);
+}
+
+.education-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.education-title.highlight {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+}
+
+.education-item p {
     margin-bottom: var(--spacing-xs);
 }
 
@@ -569,6 +638,10 @@ section::before {
     border-bottom: 2px solid var(--neon-cyan);
     transition: var(--transition-fast);
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    text-align: center;
+    align-self: center;
+    width: 100%;
+    max-width: 240px;
 }
 
 .project-link:hover {
@@ -615,6 +688,10 @@ section::before {
     font-size: 3rem;
     margin-bottom: var(--spacing-md);
     filter: drop-shadow(0 0 10px rgba(170, 0, 255, 0.3));
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
 }
 
 .cert-card h3 {
@@ -632,6 +709,13 @@ section::before {
     font-size: 0.95rem;
 }
 
+.cert-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
 .cert-link {
     color: var(--neon-cyan);
     text-decoration: none;
@@ -646,6 +730,114 @@ section::before {
 }
 
 .cert-link:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* ============================================
+   GALLERY SECTION
+   ============================================ */
+
+.gallery {
+    background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition-normal);
+    box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 255, 255, 0.2);
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+}
+
+.cert-placeholder {
+    width: 100%;
+    height: 250px;
+    background: rgba(21, 29, 63, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(170, 0, 255, 0.2);
+}
+
+.cert-icon-large {
+    font-size: 5rem;
+    filter: drop-shadow(0 0 20px rgba(170, 0, 255, 0.5));
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+    padding: var(--spacing-lg);
+    transform: translateY(100%);
+    transition: var(--transition-normal);
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h3 {
+    color: var(--neon-cyan);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.gallery-overlay p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.gallery-overlay .cert-issuer {
+    color: var(--neon-violet);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.95rem;
+}
+
+.gallery-overlay .cert-link {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid var(--neon-cyan);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+}
+
+.gallery-overlay .cert-link:hover {
     background: rgba(0, 255, 255, 0.1);
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     transform: scale(1.05);
@@ -980,3 +1172,4 @@ section::before {
 .cert-link {
     animation: pulse 4s ease-in-out infinite;
 }
+
