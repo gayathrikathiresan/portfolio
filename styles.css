@@ -63,6 +63,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
+    scroll-padding-top: 110px;
 }
 
 /* Background Grid Pattern */
@@ -96,11 +97,17 @@ body::before {
     top: 0;
     width: 100%;
     background: rgba(10, 14, 39, 0.95);
-    backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 255, 255, 0.1);
     padding: 1rem 0;
     z-index: var(--z-navbar);
     box-shadow: 0 8px 32px rgba(0, 255, 255, 0.05);
+}
+
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+    .navbar {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
 }
 
 .navbar .container {
@@ -1146,6 +1153,18 @@ section::before {
     .project-header {
         flex-direction: column;
         gap: var(--spacing-sm);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 

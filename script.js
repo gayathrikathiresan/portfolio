@@ -220,6 +220,13 @@ function initScrollAnimations() {
 
 // Cursor Effects
 function initCursorEffects() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+    if (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) {
+        return;
+    }
+
     const cursorTrail = document.createElement('div');
     cursorTrail.style.cssText = `
         position: fixed;
@@ -230,12 +237,10 @@ function initCursorEffects() {
 
     let mouseX = 0;
     let mouseY = 0;
+    let rafId = null;
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        // Add cursor glow on interactive elements
+    function updateTrail() {
+        rafId = null;
         const interactive = document.elementFromPoint(mouseX, mouseY);
         if (
             interactive &&
@@ -244,6 +249,7 @@ function initCursorEffects() {
                 interactive.closest('.skill-tag') ||
                 interactive.closest('a'))
         ) {
+            cursorTrail.style.opacity = '1';
             cursorTrail.style.background = `radial-gradient(circle, rgba(0, 255, 255, 0.2), transparent 50%)`;
             cursorTrail.style.width = '80px';
             cursorTrail.style.height = '80px';
@@ -254,7 +260,19 @@ function initCursorEffects() {
         } else {
             cursorTrail.style.opacity = '0';
         }
-    });
+    }
+
+    document.addEventListener(
+        'mousemove',
+        (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (rafId === null) {
+                rafId = requestAnimationFrame(updateTrail);
+            }
+        },
+        { passive: true }
+    );
 }
 
 // Dynamic Button Effects
