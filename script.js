@@ -3,9 +3,17 @@
    ============================================ */
 
 // Network Animation Canvas
+let networkAnimationId = null;
+let networkInitialized = false;
+let networkResizeHandler = null;
+
 function initNetworkCanvas() {
     const canvas = document.getElementById('network-canvas');
     if (!canvas) return;
+
+    const computedStyle = window.getComputedStyle(canvas);
+    if (computedStyle.display === 'none') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = canvas.getContext('2d');
     let animationId;
@@ -16,7 +24,10 @@ function initNetworkCanvas() {
         canvas.height = canvas.offsetHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    if (!networkInitialized) {
+        networkResizeHandler = () => resizeCanvas();
+        window.addEventListener('resize', networkResizeHandler, { passive: true });
+    }
 
     // Node class
     class Node {
@@ -109,7 +120,9 @@ function initNetworkCanvas() {
         animationId = requestAnimationFrame(animate);
     }
 
-    animate();
+    animationId = requestAnimationFrame(animate);
+    networkAnimationId = animationId;
+    networkInitialized = true;
 }
 
 // Smooth Scroll Navigation
@@ -399,9 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle window resize for responsive adjustments
 window.addEventListener('resize', () => {
-    // Reinitialize canvas if needed
-    const canvas = document.getElementById('network-canvas');
-    if (canvas) {
+    if (!networkInitialized) {
         initNetworkCanvas();
     }
 });
