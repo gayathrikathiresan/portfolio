@@ -734,6 +734,8 @@ section::before {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-size: 0.9rem;
+    display: inline-block;
+    margin-top: var(--spacing-sm);
 }
 
 .cert-link:hover {
@@ -829,26 +831,7 @@ section::before {
     font-size: 0.95rem;
 }
 
-.gallery-overlay .cert-link {
-    color: var(--neon-cyan);
-    text-decoration: none;
-    font-weight: 600;
-    border: 1px solid var(--neon-cyan);
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.9rem;
-    display: inline-block;
-    margin-top: var(--spacing-sm);
-}
-
-.gallery-overlay .cert-link:hover {
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-    transform: scale(1.05);
-}
+    /* Combined .cert-link rules removed here — using global .cert-link */
 
 /* ============================================
    EXPERIENCE SECTION
